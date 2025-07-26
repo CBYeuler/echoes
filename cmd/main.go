@@ -5,10 +5,11 @@ import (
 	"log"
 	"os"
 
+	"github.com/CBYeuler/echoes/config"
+	"github.com/CBYeuler/echoes/controllers"
+	"github.com/CBYeuler/echoes/database"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-
-	"github.com/CBYeuler/echoes/config"
 )
 
 func main() {
@@ -26,7 +27,8 @@ func main() {
 	if port <= 0 {
 		log.Fatal("Invalid port number")
 	}
-
+	// Initialize the database
+	database.InitDB()
 	// Init router
 	router := gin.Default()
 
@@ -41,6 +43,7 @@ func main() {
 	router.GET("/api-key", func(c *gin.Context) {
 		c.String(200, fmt.Sprintf("Your API Key is: %s", apiKey))
 	})
+	router.POST("/register", controllers.Register)
 
 	log.Printf(" Echoes running on port %d", port)
 	if err := router.Run(fmt.Sprintf(":%d", port)); err != nil {
