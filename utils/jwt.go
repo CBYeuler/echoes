@@ -66,6 +66,6 @@ func ValidateJWT(tokenString string) (*jwt.RegisteredClaims, error) {
 	return nil, errors.New("invalid JWT token")
 }
 
-//had troules with postman will try curl later
+//had troubles with postman will try curl later
 
 // This function can be used in the application to generate JWT tokens for users
