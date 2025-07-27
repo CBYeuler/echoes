@@ -33,6 +33,7 @@ func Register(c *gin.Context) {
 
 	// Insert the user into the database
 	query := "INSERT INTO users (username, password) VALUES (?, ?)"
+
 	_, err = database.DB.Exec(query, user.Username, user.Password)
 	if err != nil {
 		log.Println("Failed to insert user into DB:", err) // Log DB errors (e.g., duplicate usernames)
@@ -59,6 +60,7 @@ func Login(c *gin.Context) {
 	query := "SELECT id, password FROM users WHERE username = ?"
 	row := database.DB.QueryRow(query, input.Username)
 	var user models.User
+
 	if err := row.Scan(&user.ID, &user.Password); err != nil {
 		log.Println("User not found or error scanning row:", err) // Log if user not found or scan error
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
@@ -74,6 +76,7 @@ func Login(c *gin.Context) {
 
 	// Generate JWT token for the user
 	token, err := utils.GenerateJWT(input.Username)
+
 	if err != nil {
 		log.Println("Failed to generate JWT token:", err) // Log JWT generation errors
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})

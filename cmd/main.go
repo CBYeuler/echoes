@@ -8,6 +8,7 @@ import (
 	"github.com/CBYeuler/echoes/config"
 	"github.com/CBYeuler/echoes/controllers"
 	"github.com/CBYeuler/echoes/database"
+	"github.com/CBYeuler/echoes/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -59,6 +60,15 @@ func main() {
 		auth.POST("/login", controllers.Login)
 	}
 	//---------------------------------------------------------------------
+	// Protected routes
+	// These routes require authentication via JWT
+	api := router.Group("/api")
+	api.Use(middleware.AuthMiddleware()) // JWT-protected routes
+	{
+		api.POST("/echo", controllers.HandleEcho)
+	}
+	//add routes for user management, message history, etc.
+
 	// Start the server
 
 	log.Printf(" Echoes running on port %d", port)

@@ -46,4 +46,23 @@ func InitDB() {
 	// Log successful connection
 	log.Println("Database connection established successfully")
 	fmt.Println("Database connection established successfully")
+
+	// Create the messages table if it doesn't exist
+	// This table will store user messages and GPT replies
+	createMessagesTable := `
+	CREATE TABLE IF NOT EXISTS messages (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		username TEXT NOT NULL,
+		user_text TEXT NOT NULL,
+		gpt_reply TEXT NOT NULL,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	);
+	`
+	// Execute the create table statement
+	_, err = DB.Exec(createMessagesTable)
+	if err != nil {
+		log.Fatal("Failed to create messages table:", err)
+	}
+	log.Println("Messages table created successfully")
+	fmt.Println("Messages table created successfully")
 }
