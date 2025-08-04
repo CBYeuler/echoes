@@ -85,5 +85,4 @@ func Login(c *gin.Context) {
 	// Log the successful login and return the token
 	log.Println("User logged in successfully:", input.Username) // Log successful login
 	c.JSON(http.StatusOK, gin.H{"token": token})                // Return the JWT token
-	return
 }

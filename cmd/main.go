@@ -21,6 +21,7 @@ func main() {
 	// Ensure the OpenAI API key is set
 	// This key is required for making requests to OpenAI's API
 	apiKey := os.Getenv("OPENAI_API_KEY")
+
 	if apiKey == "" {
 		log.Fatal("OPENAI_API_KEY is not set")
 	}

@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/CBYeuler/echoes/utils"
+
 	//"github.com/CBYeuler/echoes/database"
 	"github.com/CBYeuler/echoes/models"
 	"github.com/gin-gonic/gin"
@@ -40,12 +42,13 @@ func HandleEcho(c *gin.Context) {
 	// This message will be saved to the database
 	msg := models.NewMessage(username.(string), input.UserText)
 
-	reply, err := utils.sendToGPT(input.UserText)
-	if err := msg.SaveMessage(); err != nil {
-		log.Println("Failed to save message:", err) // Log database errors
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save message"})
+	reply, err := utils.SendToGPT(input.UserText)
+	if err != nil {
+		log.Println("Failed to get GPT reply:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get GPT reply"})
 		return
 	}
+
 	msg.UpdateGPTReply(reply)
 	if err := msg.SaveMessage(); err != nil {
 		log.Println("Failed to update message:", err) // Log database errors
