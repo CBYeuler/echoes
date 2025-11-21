@@ -1,5 +1,16 @@
 # Echoes — AI-Powered Emotional Journal & Memory Assistant
 
+
+
+![Go Version](https://img.shields.io/badge/Go-1.22+-00ADD8?style=flat&logo=go)
+![Build](https://img.shields.io/badge/build-passing-brightgreen?style=flat)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Docker](https://img.shields.io/badge/docker-ready-2496ED?style=flat&logo=docker)
+![Issues](https://img.shields.io/github/issues/CBYeuler/echoes)
+![Stars](https://img.shields.io/github/stars/CBYeuler/echoes)
+![Last Commit](https://img.shields.io/github/last-commit/CBYeuler/echoes)
+![Code Style](https://img.shields.io/badge/code%20style-gofmt-79D4FD.svg)
+
 Echoes is a personal journaling and “memory companion” backend that helps you capture moments, reflect emotionally, and revisit meaningful memories over time.  
 It is built with **Go**, features a clean architecture, and exposes a **REST API** that any client (mobile, web, CLI) can use.  
 Optional AI abilities enable **semantic search**, **auto-summaries**, **tone analysis**, and **memory recall**.
@@ -130,6 +141,13 @@ GET    /api/v1/entries/similar
 GET    /api/v1/suggestions/recall
 ```
 
+
+# Feature Flags
+FF_EMBEDDINGS=false
+FF_SUMMARIES=false
+FF_SUGGESTIONS=false
+
+
 ### Entry Model Example:
 ```json
 {
@@ -177,6 +195,21 @@ curl -X POST http://localhost:8080/api/v1/entries \
   }'
 ```
 
-Environment Variables: 
-| Key | Example | Notes | | | | ----------------- | ----------------------------- | -------------------------------- | ---------------------------------------- | ----------- | | APP_PORT | 8080 | API port | | | | JWT_SECRET | super-long-random-string | keep secret | | | | JWT_ACCESS_TTL | 15m | access token lifetime | | | | JWT_REFRESH_TTL | 168h | refresh token lifetime | | | | DB_DRIVER | sqlite or postgres | choose your DB | | | | DB_DSN | ./echoes.db or Postgres DSN | connection string | | | | AI_PROVIDER | \none | openai | local\ | optional AI | | OPENAI_API_KEY | sk-... | required if AI_PROVIDER=openai | | | | FF_* | \true | false\ | feature flags (embeddings, summaries...) | |
-MIT © 2025 Cem Batuhan Yaman
+## Environment Variables
+
+| Key              | Example                        | Notes                                      |
+|------------------|--------------------------------|--------------------------------------------|
+| **APP_PORT**     | `8080`                         | API port                                   |
+| **JWT_SECRET**   | `super-long-random-string`     | Keep this secret                           |
+| **JWT_ACCESS_TTL** | `15m`                        | Access token lifetime                      |
+| **JWT_REFRESH_TTL** | `168h`                      | Refresh token lifetime                     |
+| **DB_DRIVER**    | `sqlite` or `postgres`         | Choose your DB                             |
+| **DB_DSN**       | `./echoes.db` or Postgres DSN  | Connection string                          |
+| **AI_PROVIDER**  | `none`, `openai`, `local`      | Optional AI provider                       |
+| **OPENAI_API_KEY** | `sk-...`                     | Required if `AI_PROVIDER=openai`           |
+| **FF_*`**        | `true` / `false`               | Feature flags (embeddings, summaries, etc) |
+
+---
+
+MIT © 2025 **Cem Batuhan Yaman**
+
